@@ -21,4 +21,8 @@ use({'glepnir/nerdicons.nvim', config = function() require('nerdicons').setup() 
 
 call the command `NerdIcons` with a argument, like `NerdIcons linux`
 
+## TODO
+
+need create a ui like website support search etc ? not sure.
+
 ## License MIT
