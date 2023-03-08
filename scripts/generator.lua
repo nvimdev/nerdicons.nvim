@@ -34,6 +34,9 @@ for _, v in pairs(content) do
 end
 
 print('local icons = {')
+
+local count = 0
+
 for _, v in pairs(res) do
   local tmp = v.codepoint
   if tmp:byte() > 101 then
@@ -55,6 +58,10 @@ for _, v in pairs(res) do
         .. "'},"
     )
     output:close()
+    count = count + 1
   end
 end
+
 print('}')
+print('Total icons: ' .. count)
+print('--------------end----------------')
