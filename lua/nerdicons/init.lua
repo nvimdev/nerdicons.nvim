@@ -94,6 +94,9 @@ local function prompt_window(opt)
 
   local preview_bufnr, preview_winid = preview_window(float_opt)
   vim.fn.prompt_setcallback(bufnr, function(text)
+    if not text or #text == 0 then
+      return
+    end
     render_result(text, preview_bufnr, nil)
     reset_prompt_hi()
   end)
