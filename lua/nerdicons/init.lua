@@ -64,6 +64,7 @@ local function prompt_window(opt)
   local float_opt = {
     relative = 'editor',
     border = opt.border,
+    style = 'minimal',
   }
   float_opt.height = 1
   float_opt.width = math.floor(vim.o.columns * 0.6)
