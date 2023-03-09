@@ -28,6 +28,7 @@ available options in setup params table
     border = 'single',       -- Border
     prompt = '󰨭 ',           -- Prompt Icon
     preview_prompt = ' ',   -- Preview Prompt Icon
+    width = 0.5              -- flaot window width
     down = '<C-n>',          -- Move down in preview
     up = '<C-p>',            -- Move up in preview
     copy = '<C-y>',          -- Copy to the clipboard
@@ -39,7 +40,7 @@ close the nerdicons window in prompt buffer you can exit to normal mode then pre
 
 ## Usage
 
-- call the command `NerdIcons`
+- call the command `NerdIcons` or with an argument like `NerdIcons linux`
 - input the keyword of icon name
 - `Ctrl n` or `Ctrl p` to move in preview
 - `Ctrl y` to copy the icon

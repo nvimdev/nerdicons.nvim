@@ -27,7 +27,7 @@ local function render_result(text, preview_bufnr, height)
 
   local index = 1
   for _, v in pairs(M.icons) do
-    if height and index > height then
+    if height and index > height and not text then
       break
     end
 
@@ -45,7 +45,7 @@ local function render_result(text, preview_bufnr, height)
   api.nvim_buf_add_highlight(preview_bufnr, 0, 'NerdIconSelectPrompt', 0, 0, #M.opt.preview_prompt)
 end
 
-local function preview_window(prompt_float_opt)
+local function preview_window(prompt_float_opt, argument)
   prompt_float_opt.row = prompt_float_opt.row + 3
   prompt_float_opt.height = 10
   local preview_bufnr = api.nvim_create_buf(false, false)
@@ -56,18 +56,23 @@ local function preview_window(prompt_float_opt)
   })
   vim.bo[preview_bufnr].bufhidden = 'wipe'
   api.nvim_set_option_value('wrap', false, { scope = 'local', win = preview_winid })
-  render_result(nil, preview_bufnr, prompt_float_opt.height)
+  render_result(argument, preview_bufnr, prompt_float_opt.height)
   return preview_bufnr, preview_winid
 end
 
-local function prompt_window(opt)
+local function feedkey(key)
+  local keycode = api.nvim_replace_termcodes(key, true, false, true)
+  api.nvim_feedkeys(keycode, 'x', false)
+end
+
+local function prompt_window(opt, argument)
   local float_opt = {
     relative = 'editor',
     border = opt.border,
     style = 'minimal',
   }
   float_opt.height = 1
-  float_opt.width = math.floor(vim.o.columns * 0.6)
+  float_opt.width = math.floor(vim.o.columns * opt.width)
   float_opt.row = math.floor(vim.o.lines * 0.2)
   float_opt.col = math.floor(vim.o.columns / 2 - float_opt.width / 2)
   local bufnr = api.nvim_create_buf(false, false)
@@ -93,7 +98,7 @@ local function prompt_window(opt)
 
   vim.cmd('startinsert')
 
-  local preview_bufnr, preview_winid = preview_window(float_opt)
+  local preview_bufnr, preview_winid = preview_window(float_opt, argument)
   vim.fn.prompt_setcallback(bufnr, function(text)
     if not text or #text == 0 then
       reset_prompt_hi()
@@ -185,6 +190,7 @@ end
 local function default_opts()
   return {
     border = 'single',
+    width = 0.5,
     prompt = '󰨭 ',
     preview_prompt = ' ',
     down = '<C-n>',
@@ -193,8 +199,8 @@ local function default_opts()
   }
 end
 
-function M.instance()
-  prompt_window(M.opt)
+function M.instance(argument)
+  prompt_window(M.opt, argument)
 end
 
 function M.setup(opt)

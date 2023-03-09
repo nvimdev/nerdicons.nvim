@@ -7,9 +7,15 @@ end
 
 vim.g.loaded_nerdicons = 1
 
-api.nvim_create_user_command('NerdIcons', function()
-  require('nerdicons').instance()
-end, {})
+api.nvim_create_user_command('NerdIcons', function(args)
+  local argument
+  if #args.args > 0 then
+    argument = args.args
+  end
+  require('nerdicons').instance(argument)
+end, {
+  nargs = '?',
+})
 
 nvim_set_hl(0, 'NerdIconPrompt', {
   link = 'String',
