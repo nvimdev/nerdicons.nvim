@@ -60,11 +60,6 @@ local function preview_window(prompt_float_opt, argument)
   return preview_bufnr, preview_winid
 end
 
-local function feedkey(key)
-  local keycode = api.nvim_replace_termcodes(key, true, false, true)
-  api.nvim_feedkeys(keycode, 'x', false)
-end
-
 local function prompt_window(opt, argument)
   local float_opt = {
     relative = 'editor',
@@ -167,7 +162,7 @@ local function prompt_window(opt, argument)
         api.nvim_buf_call(preview_bufnr, function()
           local text = api.nvim_get_current_line()
           local icon = text:match('Icon:%s(.+)%sN')
-          vim.fn.setreg('@', icon)
+          vim.fn.setreg('@0', icon)
           api.nvim_win_close(preview_winid, true)
           api.nvim_win_close(winid, true)
         end)
