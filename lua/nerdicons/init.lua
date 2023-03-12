@@ -17,25 +17,25 @@ local function render_result(text, preview_bufnr, height)
   local res = {}
   local indent = get_indent()
 
-  local function insert_res(item, index)
+  local function insert_res(name, icon, index)
     res[#res + 1] = (index == 1 and M.opt.preview_prompt or indent)
       .. 'Icon: '
-      .. item.icon
+      .. icon
       .. '  Name: '
-      .. item.name
+      .. name
   end
 
   local index = 1
-  for _, v in pairs(M.icons) do
+  for k, v in pairs(M.icons) do
     if height and index > height and not text then
       break
     end
 
-    if text and v.name:find(text) then
-      insert_res(v, index)
+    if text and k:find(text) then
+      insert_res(k, v, index)
       index = index + 1
     elseif not text then
-      insert_res(v, index)
+      insert_res(k, v, index)
       index = index + 1
     end
   end
