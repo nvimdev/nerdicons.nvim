@@ -10,7 +10,7 @@ local function clean_icons()
   M.icons = nil
 end
 
-local function render_result(text, preview_bufnr, height)
+local function render_result(text, preview_bufnr)
   if not M.icons then
     M.icons = require('nerdicons.icons').get_icons()
   end
@@ -27,10 +27,6 @@ local function render_result(text, preview_bufnr, height)
 
   local index = 1
   for k, v in pairs(M.icons) do
-    if height and index > height and not text then
-      break
-    end
-
     if text and k:find(text) then
       insert_res(k, v, index)
       index = index + 1
@@ -56,7 +52,7 @@ local function preview_window(prompt_float_opt, argument)
   })
   vim.bo[preview_bufnr].bufhidden = 'wipe'
   api.nvim_set_option_value('wrap', false, { scope = 'local', win = preview_winid })
-  render_result(argument, preview_bufnr, prompt_float_opt.height)
+  render_result(argument, preview_bufnr)
   return preview_bufnr, preview_winid
 end
 
@@ -98,7 +94,7 @@ local function prompt_window(opt, argument)
     if not text or #text == 0 then
       reset_prompt_hi()
     else
-      render_result(text, preview_bufnr, nil)
+      render_result(text, preview_bufnr)
     end
     reset_prompt_hi()
   end)
