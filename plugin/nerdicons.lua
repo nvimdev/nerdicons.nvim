@@ -31,3 +31,8 @@ nvim_set_hl(0, 'NerdIconBorder', {
   link = '@variable',
   default = true,
 })
+
+nvim_set_hl(0, 'NerdIconNormal', {
+  default = true,
+  link = 'Normal',
+})
