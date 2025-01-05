@@ -158,7 +158,7 @@ local function prompt_window(opt, argument)
         api.nvim_buf_call(preview_bufnr, function()
           local text = api.nvim_get_current_line()
           local icon = text:match('Icon:%s(.+)%sN')
-          vim.fn.setreg('*', icon)
+          vim.fn.setreg(M.opt.register, icon)
           api.nvim_win_close(preview_winid, true)
           api.nvim_win_close(winid, true)
         end)
@@ -187,6 +187,7 @@ local function default_opts()
     down = '<C-n>',
     up = '<C-p>',
     copy = '<C-y>',
+    register = '*',
   }
 end
 
