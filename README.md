@@ -32,6 +32,7 @@ available options in setup params table
     down = '<C-n>',          -- Move down in preview
     up = '<C-p>',            -- Move up in preview
     copy = '<C-y>',          -- Copy to the clipboard
+    register = '*',          -- Register to copy to
 }
 ```
 
